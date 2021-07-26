@@ -1,4 +1,8 @@
 # 查看
 ```node
-https://github.com/NiceMAFEI/react-ts-ToDoList.git
+git clone https://github.com/NiceMAFEI/react-ts-ToDoList.git
+yarn
+yarn start
 ```
+# 实现
+react-ts+ant
