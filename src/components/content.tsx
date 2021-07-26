@@ -1,49 +1,87 @@
-import React from 'react'
-import { Card } from 'antd';
-import Dialog from './dialog'
+import React from "react";
+import { Card } from "antd";
+import Dialog from "./dialog";
+import {readTodos} from '../utils/localStorageUtils'
 import "../App.css";
 interface IProps {
-  time?: string;
-  content?: string
+  content: string;
+  isShow?: boolean;
+  time: string;
+  id: number;
+  updata: Function
 }
 interface IState {
   time?: string;
   content: string;
-  isShow:boolean
+  isShow: boolean;
+  id: number;
 }
 class Content extends React.Component<IProps, IState> {
   constructor(props: IProps) {
-    super(props)
+    super(props);
     this.state = {
-      content: '',
-      isShow: false
-    }
-  }
-  handleClick = () => {
-    console.log(this.props.content)
+      content: this.props.content,
+      isShow: false,
+      time: this.props.time,
+      id: 0,
+    };
   }
   /**
-   * @name 删除事件
-   * @param { Event } 
+   * @name 点击卡片
    */
-  handlerAClick = (e:React.MouseEvent) => {
-    // 阻止事件冒泡
-    e.stopPropagation();
+  handleClick = () => {
     this.setState({
-      isShow:true
+      isShow: true,
+    });
+  };
+  /**
+   * @name 卡片删除
+   */
+  closeDialog = () => {
+
+    this.setState({
+      isShow: false,
     })
-    console.log('你嗲尼玛呢？')
+    const data = readTodos()
+    this.props.updata(data);
+  };
+  /**
+   * @name 修改后的content
+   */
+  getContent = (val: string, time: string) => {
+    this.setState({
+      content: val,
+      time: time,
+    });
+  };
+  componentDidMount() {
+    this.setState({
+      content: this.props.content,
+      time: this.props.time,
+      id: this.props.id,
+    });
   }
   render(): React.ReactNode {
     return (
       <div className="content--card__main">
-        <Card title={this.props.time} bordered={false} className='content--card' onClick={this.handleClick.bind(this)} extra={<a onClick={this.handlerAClick.bind(this)}>删除</a>}>
-          <p>{this.props.content}</p>
+        <Card
+          title={this.state.time}
+          bordered={false}
+          className="content--card"
+          onClick={this.handleClick.bind(this)}
+        >
+          <p>{this.state.content}</p>
         </Card>
-        <Dialog str={this.state.content} isModalVisible={this.state.isShow} />
+        <Dialog
+          str={this.state.content}
+          isModalVisible={this.state.isShow}
+          closeFn={this.closeDialog}
+          setContent={this.getContent}
+          id={this.props.id}
+        />
       </div>
-    )
+    );
   }
 }
 
-export default Content
+export default Content;

@@ -44,7 +44,7 @@
 
 .flex-center {
   display: flex;
-  flex-flow: row wrap;
+  flex-flow: column;
   justify-content: center;
   align-items: center;
 }
@@ -52,4 +52,5 @@
 .content--card {
   width: 500px;
   cursor: pointer;
+  margin: 14px 0px;
 }
