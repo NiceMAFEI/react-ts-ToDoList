@@ -24,6 +24,9 @@ class App extends React.Component {
     );
   };
   updata = (data: Todo[]) => {
+    console.log("====================================");
+    console.log(data);
+    console.log("====================================");
     console.log(readTodos());
     this.setState(
       {
@@ -79,11 +82,11 @@ class App extends React.Component {
             暂无数据
           </p>
         ) : (
-          this.state.data.map((item, index) => {
+          this.state.data.map((item) => {
             return (
               <Content
                 updata={this.updata}
-                key={index}
+                key={item.id}
                 id={item.id}
                 content={item.content}
                 time={item.time}
